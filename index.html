@@ -10,23 +10,122 @@
 <body>
 
 <script>
-  'use strict';
+  'use strict'; //記述厳格化
 
+  //コンソール表示,変数,制御構文 2/3＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
   // let x = 2;
+
   // if(x > 3){
   //   alert('xは3より大きいです');
   // }else{
   //   alert('xは3より小さいです');
   // }
+  //--------------------------------------
+  // const num = 1;
 
-  const num = 1;
-  console.log(num + 'これは数値');
-  console.log(typeof num);
+  // console.log(num + '←これは数値');
+  // console.log(typeof num);
 
-  const str = num.toString();
-  console.log(str + 'これはtoStringで文字列に変換');
-  console.log(typeof str);
+  // const str = num.toString();
+  // console.log(str + '←これはtoStringで文字列に変換');
+  // console.log(typeof str);
+  //--------------------------------------
+  // let x = 0;
+  // while(x < 100){
+  //   x++;
+  //   console.log(x);
+  // }
+  //--------------------------------------
+  // let sample = ['apple','orange','grape'];
+  //lengthは配列,文字列を取得するメソッド
+  // for(let i = 0; i < sample.length; i++){
+  //   console.log(sample[i]);
+  // }
+
+  //関数,戻り値,無名関数,アロー関数 2/4＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+  //functionで関数宣言 関数名は自由(キャメルケースで)
+  //関数の実行には宣言範囲外で『関数名()』が必要※１
+  // function sampleAlert(){
+  //   alert('こんにちは');
+  //   alert('アラートテストです');
+  // }
+  // sampleAlert();//※1コレ
+
+  //関数に引数設定ver.---------------------
+  //〈確認〉引数にはクオーテーションつけない
+  //以下のパターンでは処理を3周する
+  // function sampleAlert2(fruit){
+  // alert(fruit);
+  // alert('アラートテストです');
+  // }
+  // sampleAlert2('apple');
+  // sampleAlert2('orange');
+  // sampleAlert2('grape');
+
+  //複数の引数設定ver.---------------------
+  // function sampleAlert3(greeting, fruit){
+  // alert(greeting);
+  // alert(fruit);
+  // }
+  // sampleAlert3( 'こんにちは', 'apple');
+  // sampleAlert3('こんにちは', 'orange');
+  // sampleAlert3('こんにちは', 'grape');
   
+  //引数にデフォルト値設定ver.---------------
+  //引数に値がなければデフォルトが適用され、あればそれが適用される
+  // function sampleAlert4(greeting = 'こんにちは'){
+  // alert(greeting);
+  // alert('テスト');
+  // }
+  // sampleAlert3('おはよう');
+
+  //上記応用独自解釈------------------------
+  //引数が複数時にデフォルト値を設定する際は、全部に設定した方が良さそう。
+  //全部に設定しないと処理順序がおかしくなる。
+  //なお、値をnllにする際は「undefined」を書いておく。
+  // function sampleAlert4(greeting='こんにちは', fruit='りんご'){
+  // alert(greeting);
+  // alert(fruit);
+  // }
+  // sampleAlert4('おはよー');
+  // sampleAlert4(undefined,'みかん');
+  // sampleAlert4('おはよう','grape');
+
+  //戻り値---------------------------------
+  //「return」を使うと求めた結果(値)を呼び出した関数部分に置き換えが可能
+  //但し、関数内で途中に書くと「return」の機能上処理が終わる為記述順序警戒
+  // function calc(a, b){
+  //   console.log(a * b);
+  //   return a + b;
+  // }
+  // alert(calc(2,3));
+
+  //上記の処理結果は
+  //コンソール表示 → ６(シンプルに掛け算して表示)
+  //アラート表示 → 5
+  //①alert内で関数に引数に値が設置される
+  //②returnで「calc(a, b)」自体が「5」に置き換わる
+  //③その結果、alert内引数も「5」となり、「5」が表示される
+
+  //無名関数-------------------------------
+  //関数宣言と機能は同じ。関数の実行には「();」が必要
+  //記述を簡易化するために使用
+  // const calc = function(a, b){
+  //   return a + b;
+  // }
+  // alert(calc(2,3))
+
+  //アロー関数------------------------------
+  //「function」省略可能になったver.
+  //引数が一つであれば、引数を囲むカッコ省略可
+  //関数内処理が一行であれば、波カッコと「return」記述省略可
+  // const calc = (a, b) => {
+  //   return a + b
+  // }
+  // alert(calc(2,3));
+
+
 </script>
   
 </body>
