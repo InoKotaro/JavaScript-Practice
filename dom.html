@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript-Practice</title>
+</head>
+
+<body>
+
+  <button class ="btn" id="btn01" >ここを押してね</button>
+  <button class ="btn">ここを押してね</button>
+  <button class ="btn">ここを押してね</button>
+
+<script>
+  'use strict'; //記述厳格化
+
+  //使用頻度高メソッド,DOM操作 2/6==========================
+  //DOM操作はHTMLの要素をjsで書き換えること
+
+  //以下二つはdocumentオブジェクトから呼び出して使える
+  
+  // ↓idを手がかりにHTML要素を取り出す
+  // document.getElementById();
+  // ↓ClassNameを手がかりに複数のHTML要素を取り出す
+  // document.getElementsByClassName();
+
+  //document.getElementById();はidなので個別に取得する前提で作られている
+  const btn01 = document.getElementById('btn01');
+  console.log(btn01);
+
+  //document.getElementsByClassNakme();はclassなので複数取得できるように作られている
+  //よってコンソールではidとは違い番号が割り振られて(今回のパターンでは)btnオブジェクトに配列形式で格納される
+  //さらにそれを個別で取り出すには、「btn[0]」とすれば最初のを取得可
+  const btn = document.getElementsByClassName('btn');
+  console.log(btn);
+
+
+</script>
+  
+</body>
+</html>
