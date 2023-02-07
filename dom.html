@@ -22,57 +22,71 @@
 </head>
 
 <body>
+  <div class ="example01">
+    <button class ="btn" id="btn01" >ここを押してね</button>
+    <button class ="btn">ここを押してね</button>
+    <button class ="btn">ここを押してね</button>
+    <button id = "button" class = "button">クリックしてね</button>
+  </div>
 
-  <button class ="btn" id="btn01" >ここを押してね</button>
-  <button class ="btn">ここを押してね</button>
-  <button class ="btn">ここを押してね</button>
+  <div class = "example02">
+    <button id ="button-add" class="button">リスト要素を増やす</button>
+    <button id ="button-clear" class="button">リスト要素を削除</button>
+      <div class ="list-contents">
+        <h2>リスト要素一覧</h2>
+        <ul id ="list"></ul>
+      </div>
+  </div>
 
-<script>
-  'use strict'; //記述厳格化
+  <script>
+    'use strict'; //記述厳格化
 
-  //DOM操作,使用頻度高メソッド 2/6==========================
-  //DOM操作はHTMLの要素をjsで書き換えること
+    //DOM操作,使用頻度高メソッド 2/6==========================
+    //DOM操作はHTMLの要素をjsで書き換えること
+    
+    //メソッドに引数で要素を指定するときは「('')」に書く
+    //以下二つはdocumentオブジェクトから呼び出して使える
+    //-----------------------------------------------
+    // ↓idを手がかりにHTML要素を取り出す
+    // document.getElementById();
+    // ↓ClassNameを手がかりに複数のHTML要素を取り出す
+    // document.getElementsByClassName();
+    //-----------------------------------------------
+    
+    //document.getElementById();はidなので個別に取得する前提で作られている
+    // const btn01 = document.getElementById('btn01');
+    // console.log(btn01);
 
-  //以下二つはdocumentオブジェクトから呼び出して使える
-  //-----------------------------------------------
-  // ↓idを手がかりにHTML要素を取り出す
-  // document.getElementById();
-  // ↓ClassNameを手がかりに複数のHTML要素を取り出す
-  // document.getElementsByClassName();
-  //-----------------------------------------------
-  
-  //document.getElementById();はidなので個別に取得する前提で作られている
-  // const btn01 = document.getElementById('btn01');
-  // console.log(btn01);
+    //document.getElementsByClassName();はclassなので複数取得できるように作られている
+    //よってコンソールではidとは違い番号が割り振られて(今回のパターンでは)btnオブジェクトに配列形式で格納される
+    //さらにそれを個別で取り出すには、「btn[0]」とすれば最初のを取得可
+    // const btn = document.getElementsByClassName('btn');
+    // console.log(btn);
 
-  //document.getElementsByClassName();はclassなので複数取得できるように作られている
-  //よってコンソールではidとは違い番号が割り振られて(今回のパターンでは)btnオブジェクトに配列形式で格納される
-  //さらにそれを個別で取り出すには、「btn[0]」とすれば最初のを取得可
-  // const btn = document.getElementsByClassName('btn');
-  // console.log(btn);
+    //クリックイベント例 getElementByIdパターン----------------------
+    //〜〜クリックでコンソール表示〜〜
+    //１行目でbtn01オブジェクトに「getElementById」を使ってHTMLのbtn01要素を格納
+    //「addEventListener」に引数を渡す。他のメソッドでも引数必要は共通認識。リファレンス参照
+    //「addEventListener」の時は無名関数使用。アロー関数を使うと「this」の扱いが違ってくる為
+    //以下で指す「this」はクリックされた要素自身のこと(今回はbtn01)
+    // const btn01 = document.getElementById('btn01');
+    // btn01.addEventListener('click', function(){
+    //   console.log(this);
+    // });
 
-  //クリックイベント例 getElementByIdパターン----------------------
-  //〜〜クリックでコンソール表示〜〜
-  //１行目でbtn01オブジェクトに「getElementById」を使ってHTMLのbtn01要素を格納
-  //「addEventListener」に引数を渡す。他のメソッドでも引数必要は共通認識。リファレンス参照
-  //「addEventListener」の時は無名関数使用。アロー関数を使うと「this」の扱いが違ってくる為
-  //以下で指す「this」はクリックされた要素自身のこと(今回はbtn01)
-  // const btn01 = document.getElementById('btn01');
-  // btn01.addEventListener('click', function(){
-  //   console.log(this);
-  // });
-
-  //〜〜クリックで表示を変える〜〜
-  //「classList.add」は「classList」自体にクラスを操作する機能がある。
-  //「add」はメソッド。「remove」メソッドを使えば削除も可能
-  //無名関数内の処理にある「clicked」は<style>内にある名前と連携させることで切替え可能になる
-  // const btn01 = document.getElementById('btn01');
-  // btn01.addEventListener('click', function(){
-  //   //this.classList.add('clicked'); //メソッドがaddパターン
-  //   this.classList.toggle('clicked'); //メソッドがtoggleパターン
-  //   });
+    //〜〜クリックで表示を変える〜〜
+    //イベント設置によく使うのが「addEventListener」
+    //「classList.add」の「classList」はプロパティでこれ自体にクラスを操作する機能がある。
+    //「add」はメソッド。「remove」メソッドを使えば削除も可能
+    //無名関数内の処理にある「clicked」は<style>内にある名前と連携させることで切替え可能になる
+    // const btn01 = document.getElementById('btn01');
+    // btn01.addEventListener('click', function(){
+    //   //this.classList.add('clicked'); //メソッドがaddパターン
+    //   this.classList.toggle('clicked'); //メソッドがtoggleパターン
+    //   });
 
     //クリックイベント例 getElementsByClassNameパターン------------
+    //「addEventListener」使用時カッコ扱い要注意
     //以下では動かない。なぜなら「addEventListener」は「getElementById」で取得した↓
     //id要素(個別要素)に対してのみ適用可能なメソッドな為。
     // const btn = document.getElementsByClassName('btn');
@@ -82,14 +96,47 @@
 
     //解決策
     //複数のclassで同じアクションを設定したい際はfor文を使って一つずつ要素を取り出す
-    const btn = document.getElementsByClassName('btn');
-    for (let i = 0; i < btn.length; i++){
-      btn[i].addEventListener('click', function(){ //btn[i]になるので要確認
-        this.classList.toggle('clicked');
-      });
-    }
-  
-</script>
+    // const btn = document.getElementsByClassName('btn');
+    // for (let i = 0; i < btn.length; i++){
+    //   btn[i].addEventListener('click', function(){ //btn[i]になるので要確認
+    //     this.classList.toggle('clicked'); //<style>で設定した「clicked」に切替える
+    //   });
+    // }
+
+    //DOM操作つづき 2/7===================================
+    //「addEventListener」使用時カッコ扱い要注意
+    //「innerHTML」はテキストを書換える時に使用
+    // const button = document.getElementById('button');
+    // button.addEventListener('click', function(){
+    //   this.innerHTML = 'クリックありがとう';
+    // });
+
+    //一度しか押せないボタン作成
+    //「setAttribute」はHTMLに「class」以外の属性を足せるメソッド
+    //「disabled」はボタン要素が無効化される属性でそれをtrue(適用)としている
+    // const button = document.getElementById('button');
+    // button.addEventListener('click', function(){
+    //   this.innerHTM = 'クリック済み';
+    //   this.setAttribute('disabled', true);
+    // });
+
+    //ボタンクリックでリスト要素増減
+    //最初の3行で各ボタンの要素を変数に格納
+    //「document.createElement」はHTML要素を新規作成できるメソッド(今回はli要素を作成)↓
+    //この一文だけで表示はできない為、一旦「element」変数に格納しておく。↓
+    //その後、作った要素に内容を書く記述をする。これはセットと認識しておく。(今回は「リスト」を書く)
+    //「appendChild」を使って、最初に定義した「list」変数に「リスト」と書かれた変数「element」を書き足す
+    const buttonAdd = document.getElementById('button-add');
+    const buttonClear = document.getElementById('button-clear');
+    const list = document.getElementById('list');
+
+    buttonAdd.addEventListener('click', function(){
+      const element = document.createElement('li');
+      element.innerHTML = 'リスト';
+      list.appendChild(element);
+    });
+    
+  </script>
   
 </body>
 </html>
