@@ -38,10 +38,22 @@
       </div>
   </div>
 
+  <div class = "example03">
+    <div class = "button-contents">
+      <button class = "button button-A">ボタンA</button>
+      <button class = "button button-B">ボタンB</button>
+      <button class = "button button-C">ボタンC</button>
+    </div>
+    <div class ="list-contents">
+      <h2>クリックされたアルファベット一覧</h2>
+      <ul id ="list-alphabet"></ul>
+    </div>
+  </div>
+
   <script>
     'use strict'; //記述厳格化
 
-    //DOM操作,使用頻度高メソッド 2/6==========================
+    //DOM操作,使用頻度高メソッド 2/6^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     //DOM操作はHTMLの要素をjsで書き換えること
     
     //メソッドに引数で要素を指定するときは「('')」に書く
@@ -54,88 +66,171 @@
     //-----------------------------------------------
     
     //document.getElementById();はidなので個別に取得する前提で作られている
+    //=========================================================
     // const btn01 = document.getElementById('btn01');
     // console.log(btn01);
+    //=========================================================
 
     //document.getElementsByClassName();はclassなので複数取得できるように作られている
     //よってコンソールではidとは違い番号が割り振られて(今回のパターンでは)btnオブジェクトに配列形式で格納される
     //さらにそれを個別で取り出すには、「btn[0]」とすれば最初のを取得可
+    //=========================================================
     // const btn = document.getElementsByClassName('btn');
     // console.log(btn);
+    //=========================================================
 
-    //クリックイベント例 getElementByIdパターン----------------------
+    //クリックイベント例 getElementByIdパターン----------
     //〜〜クリックでコンソール表示〜〜
     //１行目でbtn01オブジェクトに「getElementById」を使ってHTMLのbtn01要素を格納
     //「addEventListener」に引数を渡す。他のメソッドでも引数必要は共通認識。リファレンス参照
     //「addEventListener」の時は無名関数使用。アロー関数を使うと「this」の扱いが違ってくる為
     //以下で指す「this」はクリックされた要素自身のこと(今回はbtn01)
+    //=========================================================
     // const btn01 = document.getElementById('btn01');
     // btn01.addEventListener('click', function(){
     //   console.log(this);
     // });
+    //=========================================================
 
     //〜〜クリックで表示を変える〜〜
     //イベント設置によく使うのが「addEventListener」
     //「classList.add」の「classList」はプロパティでこれ自体にクラスを操作する機能がある。
     //「add」はメソッド。「remove」メソッドを使えば削除も可能
     //無名関数内の処理にある「clicked」は<style>内にある名前と連携させることで切替え可能になる
+    //=========================================================
     // const btn01 = document.getElementById('btn01');
     // btn01.addEventListener('click', function(){
     //   //this.classList.add('clicked'); //メソッドがaddパターン
     //   this.classList.toggle('clicked'); //メソッドがtoggleパターン
     //   });
+    //=========================================================
 
-    //クリックイベント例 getElementsByClassNameパターン------------
+    //クリックイベント例 getElementsByClassNameパターン------
     //「addEventListener」使用時カッコ扱い要注意
     //以下では動かない。なぜなら「addEventListener」は「getElementById」で取得した↓
     //id要素(個別要素)に対してのみ適用可能なメソッドな為。
+    //=========================================================
     // const btn = document.getElementsByClassName('btn');
     // btn.addEventListener('click', function(){
     //   this.classList.toggle('clicked');
     // });
+    //=========================================================
 
     //解決策
     //複数のclassで同じアクションを設定したい際はfor文を使って一つずつ要素を取り出す
+    //=========================================================
     // const btn = document.getElementsByClassName('btn');
     // for (let i = 0; i < btn.length; i++){
     //   btn[i].addEventListener('click', function(){ //btn[i]になるので要確認
     //     this.classList.toggle('clicked'); //<style>で設定した「clicked」に切替える
     //   });
     // }
+    //=========================================================
 
-    //DOM操作つづき 2/7===================================
+    //DOM操作つづき 2/7^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     //「addEventListener」使用時カッコ扱い要注意
     //「innerHTML」はテキストを書換える時に使用
+    //=========================================================
     // const button = document.getElementById('button');
     // button.addEventListener('click', function(){
     //   this.innerHTML = 'クリックありがとう';
     // });
+    //=========================================================
 
     //一度しか押せないボタン作成
     //「setAttribute」はHTMLに「class」以外の属性を足せるメソッド
     //「disabled」はボタン要素が無効化される属性でそれをtrue(適用)としている
+    //=========================================================
     // const button = document.getElementById('button');
     // button.addEventListener('click', function(){
     //   this.innerHTM = 'クリック済み';
     //   this.setAttribute('disabled', true);
     // });
+    //=========================================================
 
     //ボタンクリックでリスト要素増減
-    //最初の3行で各ボタンの要素を変数に格納
-    //「document.createElement」はHTML要素を新規作成できるメソッド(今回はli要素を作成)↓
+    //①最初の3行で各ボタンの要素を変数に格納
+    //②「document.createElement」はHTML要素を新規作成できるメソッド(今回はli要素を作成)↓
     //この一文だけで表示はできない為、一旦「element」変数に格納しておく。↓
     //その後、作った要素に内容を書く記述をする。これはセットと認識しておく。(今回は「リスト」を書く)
-    //「appendChild」を使って、最初に定義した「list」変数に「リスト」と書かれた変数「element」を書き足す
-    const buttonAdd = document.getElementById('button-add');
-    const buttonClear = document.getElementById('button-clear');
-    const list = document.getElementById('list');
+    //③「appendChild」を使って、最初に定義した「list」変数に「リスト」と書かれた変数「element」を書き足す
+    //=========================================================
+    // const buttonAdd = document.getElementById('button-add');
+    // const buttonClear = document.getElementById('button-clear');
+    // const list = document.getElementById('list');
 
-    buttonAdd.addEventListener('click', function(){
-      const element = document.createElement('li');
-      element.innerHTML = 'リスト';
-      list.appendChild(element);
-    });
+    // buttonAdd.addEventListener('click', function(){
+    //   const element = document.createElement('li');
+    //   element.innerHTML = 'リスト';
+    //   list.appendChild(element);
+    // });
+    //=========================================================
+
+    //「removeChild」で指定した要素の子要素を1個ずつ削除可(今回は「list」と命名したulタグにある子要素)
+    //「lastChild」は「list」にある子要素を最後から削除する。「firstChild」もある。
+    //=========================================================
+    // buttonClear.addEventListener('click', function(){
+      //list.removeChild(list.lastChild); //1つずつ削除パターン
+
+      //while(list.lastChild){ //一括削除パターン(while文を使う事で可能になる)
+        //list.removeChild(list.lastChild); 
+        //while文は条件がtrueである限り処理を実行する為、今回は「list」に最後の1つまで子要素があればtrueが返される。
+        //要素自体を削除する「remove」メソッドもある。使用例：list.remove(); ←リスト要素自体を削除
+      //}
+    //});
+    //=========================================================
     
+    //DOM操作つづき 2/8^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //-----------------------------------------------------
+    //「document.querySelector」でセレクタ指定(CSSの要領)をして要素取得(最初の1つのみ)
+    //「〜All」はセレクタ指定をして要素取得(一致した全て)
+    //-----------------------------------------------------
+    //〜〜デメリット〜〜
+    //便利な反面「getElement〜」パターンと比べて処理速度が遅い為、取得したい要素の数などに応じて判断して使用
+    //シンプルSelectorは「getElementById」的なイメージ
+    //SelectorAllは「getElementsByClassName」的なイメージ。取得した要素も複数なので配列(NodeList)で表示される。
+
+    // //使用例
+    // document.querySelector('.color .button-blue');
+    // document.querySelector('.color .button:last-of-type');
+    // document.querySelectorAll('.button');
+    
+    //=========================================================
+    // const element01 = document.querySelector('.button-contents .button-A');
+    // console.log('「.button-contents .button-A」で取得した要素', element01);
+    
+    // const element02 = document.querySelector('.button-contents .button-B');
+    // console.log('「.button-contents .button-B」で取得した要素', element02);
+
+    // const element03 = document.querySelectorAll('.button');
+    // console.log('「.button-contents .button-C」で取得した要素', element03);
+    //=========================================================
+
+    //〜〜アルファベット名が一覧に追加されるボタン〜〜
+    //①今回は「querySelectorAll」で「button-contents」にある「button」要素を取得して変数へ格納
+    //②「getElementById」で「list-alphabet」要素を取得して変数へ格納
+    //③「li」要素を書き足す旨を「element」変数に格納。現時点では抽象的な感じ(③以降は枠組みの詳細を書く)
+    //④「innerHTML」で「this」に「element」変数を書き換える。「this」はクリックされた要素(⑥でこの関数が起動して初めて定義される)を指す
+    //⑤最後に「listAlphabet」変数(ul要素)に「element」変数(li要素)を子要素として「appendChild」を使い末尾に書き足す
+    //⑥今回は「querySelectorAll」を使い、配列でbutton要素を取得した為、for文で1つずつ取り出す必要がある
+    //⑦「addEventListener」の引数に「function」を指定していないのは、クリック後の処理を関数で作ってある為
+    //疑問独自解釈：Q.なぜfor文を使ってるのに配列全部ではなく、押したボタンのテキストだけが個別で表示されるのか？
+    //A.for文は配列を表に具現化させるイメージ(⑥)。今回は「addEventListener」を使い配列の何番目をクリックしたかで関数を起動させている(⑦))
+    //=========================================================
+    const buttonAlphabet = document.querySelectorAll('.button-contents .button'); //①
+    const listAlphabet = document.getElementById('list-alphabet'); //②
+
+    const buttonAlphabetClick = function(){ //独自で関数作成
+      let element = document.createElement('li'); //③
+      element.innerHTML = this.innerHTML; //④
+      listAlphabet.appendChild(element); //⑤
+    }
+
+    for(let i = 0; i < buttonAlphabet.length; i++){ //⑥
+      buttonAlphabet[i].addEventListener('click', buttonAlphabetClick) //⑦
+    }
+    //=========================================================
+
   </script>
   
 </body>
